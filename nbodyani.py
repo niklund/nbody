@@ -5,11 +5,11 @@ import matplotlib; matplotlib.use('TkAgg')
 import matplotlib.animation as animation
 
 G = 1
-q_n = 100 # number of bodies 
-N = 10000
-tau = 1e4
+q_n = 15 # number of bodies 
+N = 1000 # std N = 1000
+tau = 1e3
 dt = tau/float(N-1)
-epsilon = 1e-6 #1e-3 är hyffsad 1e-4 ännu bättre
+epsilon = 1e-4 #1e-3 är hyffsad 1e-4 ännu bättre för 1e3 pos och 15 bodies
 
 class Body:
     '''Class representing a 2D particle'''
@@ -52,14 +52,14 @@ class Body:
 
         return r_next
 
-particles = [Body(np.random.uniform(-1e4, 1e4), np.random.uniform(-1e4, 1e4), np.random.uniform(0, 0), np.random.uniform(0, 0), 0, 0, 1e3) for i in range(q_n)] #1e3 pos
+particles = [Body(np.random.uniform(-1e3, 1e3), np.random.uniform(-1e3, 1e3), np.random.uniform(0, 0), np.random.uniform(0, 0), 0, 0, 1e3) for i in range(q_n)] #1e3 pos
 
 Writer = animation.writers['ffmpeg']
-writer = Writer(fps=30, metadata=dict(artist='Me'), bitrate=1800)
+writer = Writer(fps=60, metadata=dict(artist='Me'), bitrate=1800)
 
 fig = plt.figure()
-ax = plt.axes(xlim=(-100000,100000), ylim=(-100000, 100000))
-line, = ax.plot([], [], '.', alpha=1, markersize=10)
+ax = plt.axes(xlim=(-1000,1000), ylim=(-1000, 1000))
+line, = ax.plot([], [], '.', alpha=1, markersize=5)
 
 def init():
     line.set_data([], [])
@@ -93,6 +93,6 @@ def animate(i):
     
     return line,
 
-anim = animation.FuncAnimation(fig, animate, init_func=init, frames=1000, interval=5, blit=True)
+anim = animation.FuncAnimation(fig, animate, init_func=init, frames=1000, interval=5, blit=True) #std frames = 1000
 anim.save('fuckoff.mp4', writer=writer, dpi=200)
        
