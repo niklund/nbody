@@ -94,5 +94,5 @@ def animate(i):
     return line,
 
 anim = animation.FuncAnimation(fig, animate, init_func=init, frames=1000, interval=5, blit=True) #std frames = 1000
-anim.save('fuckoff.mp4', writer=writer, dpi=200)
+anim.save('nbody.mp4', writer=writer, dpi=200)
        
